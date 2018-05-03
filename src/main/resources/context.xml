@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean class="ua.com.owu.models.User" id="userX">
+        <property name="name" value="Vasya"/>
+    </bean>
+
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" id="vendorAdapter"/>
+        </property>
+        <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml"/>
+        <property name="persistenceUnitName" value="xxx"/>
+    </bean>
+
+    <!--<bean class="ua.com.owu.dao.UserDAO" id="userDAO">-->
+    <!--<property name="entityManagerFactory" ref="entityManagerFactory"/>-->
+    <!--</bean>-->
+
+    <!--<bean class="ua.com.owu.service.impl.UserServiceImpl1" id="userService">-->
+    <!--<property name="userDAO" ref="userDAO"/>-->
+    <!--</bean>-->
+
+    <!--<bean class="ua.com.owu.service.impl.UserServiceImpl2" id="userService2">-->
+    <!--<property name="userDAO" ref="userDAO"/>-->
+    <!--</bean>-->
+
+    <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <context:component-scan base-package="ua.com.owu.*"/>
+</beans>
